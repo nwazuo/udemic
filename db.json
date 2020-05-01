@@ -1,0 +1,33 @@
+{
+  "student": [
+    {
+      "id": 1,
+      "firstname": "chizo",
+      "lastname": "nwazuo"
+    },
+    {
+      "firstname": "Nath",
+      "lastname": "friedman",
+      "id": 2
+    }
+  ],
+  "instructor": [
+    {
+      "id": 1,
+      "firstname": "prakash",
+      "lastname": "haliburt"
+    }
+  ],
+  "tutorial": [
+    {
+      "id": 1,
+      "title": "Make a donut from home",
+      "date-published": "10 days ago"
+    },
+    {
+      "title": "Make a caserolle from school",
+      "date-published": "200-decades-ago",
+      "id": 2
+    }
+  ]
+}
