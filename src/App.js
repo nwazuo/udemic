@@ -26,7 +26,7 @@ function App() {
         <Provider store={store}>
           <CSSReset />
           <Router>
-            <Home path="/" />
+            <Signin path="/" />
             <Signin path="/signin" />
             <Dashboard path="/student/dashboard" />
           </Router>
