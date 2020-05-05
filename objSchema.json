@@ -1,0 +1,36 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "googleId": "400833",
+      "firstName": "Chizo",
+      "lastName": "Nwazuo",
+      "email": "chizonwazuo@yahoo.com",
+      "imageUrl": "https://api.cloudinary.com/image/234kfns2.png",
+      "starred": [1, 4, 5, 7],
+      "favorites": [3, 5, 7, 6]
+    }
+  ],
+  "instructors": [
+    {
+      "id": 1,
+      "googleId": "23423",
+      "firstName": "Lord",
+      "lastName": "Chizo",
+      "email": "lordchizo@gmail.com",
+      "bio": "I,m a nice and loving instructor, always ready to abide by the rules"
+    }
+  ],
+  "tutorials": [
+    {
+      "id": 1,
+      "videoUrl": "http://api.cloudinary.net/redux-free29343.png",
+      "createdAt": "2019-03-14T10:59:52.798Z",
+      "starsCount": 24,
+      "category": "Web Design",
+      "title": "Learn Redux for free in 10 seconds",
+      "description": "You are gonnal learn redux for free in this super-short tutorial, like you were an alien",
+      "createdBy": "23423"
+    }
+  ]
+}

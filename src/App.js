@@ -1,58 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./App.css";
-import Login from "./Login";
-import { Text } from "@chakra-ui/core";
-import { openUploadWidget } from "./utils/CloudinaryService";
 
-let loginStatus;
+//Chakra UI Component Library (uses emotion CSS-in-JS)
+import { CSSReset, theme } from "@chakra-ui/core";
+import { ThemeProvider } from "emotion-theming";
 
-const googleResponse = async response => {
-  loginStatus = await response;
-  console.log(loginStatus);
-};
+//Reach Router
+import { Router } from "@reach/router";
+
+//Redux
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import { SET_AUTHENTICATED } from "./redux/types";
+import { logoutUser, getUserData } from "./redux/actions/userActions";
+
+//Pages
+import Signin from "./pages/signin";
+import Home from "./pages/home";
+import Dashboard from "./pages/student/dashboard";
 
 function App() {
-  const openCloudinaryWidget = () => {
-    openUploadWidget(
-      { cloudName: "udemic", uploadPreset: "sample" },
-      (error, result) => {
-        if (!error) {
-          console.log(result);
-        } else {
-          console.log(error);
-        }
-      }
-    );
-  };
-
   return (
-    <div className="App">
-      <Login responseGoogle={googleResponse} />
-      <div>
-        <button onClick={openCloudinaryWidget}>Open Cloudinary Widget</button>
-      </div>
-      <Authenticate />
-    </div>
-  );
-}
-
-function Authenticate() {
-  const [status, setStatus] = useState(null);
-
-  useEffect(() => {});
-
-  if (status === null) {
-    return (
-      <Text fontSize="4xl" fontWeight="bold">
-        Loading...
-      </Text>
-    );
-  }
-
-  return (
-    <Text fontSize="4xl" fontWeight="bold">
-      {status}
-    </Text>
+    <React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <CSSReset />
+          <Router>
+            <Home path="/" />
+            <Signin path="/signin" />
+            <Dashboard path="/student/dashboard" />
+          </Router>
+        </Provider>
+      </ThemeProvider>
+    </React.StrictMode>
   );
 }
 
