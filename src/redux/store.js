@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 
 import userReducer from "./reducers/userReducer";
 import uiReducer from "./reducers/uiReducer";
@@ -16,10 +17,7 @@ const reducers = combineReducers({
 const store = createStore(
   reducers,
   initialState,
-  compose(
-    applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  composeWithDevTools(applyMiddleware(...middleware))
 ); //I don't exactly get what this guy does
 
 export default store;
