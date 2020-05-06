@@ -17,7 +17,11 @@ import { logoutUser, getUserData } from "./redux/actions/userActions";
 //Pages
 import Signin from "./pages/signin";
 import Home from "./pages/home";
-import Dashboard from "./pages/student/dashboard";
+
+//Components
+import StudentDashboard from "./pages/student";
+import InstructorDashboard from "./pages/instructor";
+import AuthPage from "./components/AuthPage";
 
 function App() {
   return (
@@ -27,8 +31,11 @@ function App() {
           <CSSReset />
           <Router>
             <Signin path="/" />
+            <Signin path="/signin/:action" />
+            {/* funny implementation of a signup route*/}
             <Signin path="/signin" />
-            <Dashboard path="/student/dashboard" />
+            <AuthPage path="/student" page={<StudentDashboard />} />
+            <AuthPage path="instructor/*" page={<InstructorDashboard />} />
           </Router>
         </Provider>
       </ThemeProvider>

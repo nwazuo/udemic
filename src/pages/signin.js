@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/core";
 
 //Assets
-import Logo from "../assets/website-logo.svg";
+import TopHeader from "../components/TopHeader";
 
 //Google oauth utility
 import { Login, Signup } from "../utils/ReactGoogleLogin";
@@ -28,22 +28,19 @@ import {
   getUserData
 } from "../redux/actions/userActions";
 
-const Signin = ({ loginUser, signupUser, UI, user }) => {
+const Signin = ({ loginUser, signupUser, UI, user, action }) => {
   const signupSuccessHandler = ({ userType, userData }) => {
     signupUser({ userType, userData });
   };
-
   const loginSuccessHandler = ({ userType, googleId }) => {
     loginUser({ userType, googleId });
   };
 
   return (
     <Box height="100vh">
-      <Box borderBottomWidth="1px" textAlign="center" paddingY="10px">
-        <Image src={Logo} display="block" margin="auto" />
-      </Box>
+      <TopHeader />
       <Box marginX="auto">
-        <Tabs isFitted variant="enclosed">
+        <Tabs isFitted variant="enclosed" defaultIndex={action ? 0 : 1}>
           <TabList>
             <Tab>SIGN UP</Tab>
             <Tab>SIGN IN</Tab>

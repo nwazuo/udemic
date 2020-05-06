@@ -64,6 +64,14 @@ export const signupUser = ({ userType, userData }) => dispatch => {
     });
 };
 
+export const logoutUser = () => dispatch => {
+  localStorage.removeItem("googleId");
+  localStorage.removeItem("userType");
+  localStorage.removeItem("sessionExpires");
+  dispatch({ type: SET_UNAUTHENTICATED });
+  navigate("/signin");
+};
+
 export const getUserData = ({ userType, googleId }) => dispatch => {
   dispatch({ type: LOADING_USER });
   axios
