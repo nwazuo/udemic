@@ -11,7 +11,7 @@ import { navigate } from "@reach/router";
 
 //Axios defaults
 axios.defaults.baseURL = "https://udemic-server.herokuapp.com";
-axios.defaults.headers.common['Content-Type'] = "application/json";
+axios.defaults.headers.common["Content-Type"] = "application/json";
 
 export const loginUser = ({ userType, googleId }) => dispatch => {
   dispatch({ type: LOADING_UI });
@@ -24,7 +24,7 @@ export const loginUser = ({ userType, googleId }) => dispatch => {
       dispatch(getUserData({ userType, googleId }));
       dispatch({ type: CLEAR_ERRORS });
       //NAVIGATE code for reach router
-      navigate(`/${userType}/dashboard`);
+      navigate(`/${userType}`);
     })
     .catch(err => {
       console.log({ err });
@@ -51,7 +51,7 @@ export const signupUser = ({ userType, userData }) => dispatch => {
       setAuthenticated(res.data.googleId, userType, Date.now() + 604800);
       dispatch(getUserData({ userType, googleId: res.data.googleId }));
       dispatch({ type: CLEAR_ERRORS });
-      navigate(`/${userType}/dashboard`);
+      navigate(`/${userType}`);
     })
     .catch(err => {
       console.log(err);
@@ -72,7 +72,7 @@ export const logoutUser = () => dispatch => {
   localStorage.removeItem("userType");
   localStorage.removeItem("sessionExpires");
   dispatch({ type: SET_UNAUTHENTICATED });
-  navigate("/signin");
+  window.location = "/signin";
 };
 
 export const getUserData = ({ userType, googleId }) => dispatch => {

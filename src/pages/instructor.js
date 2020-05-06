@@ -7,11 +7,12 @@ import { Link as ReachLink, Router } from "@reach/router";
 
 //Redux
 import { connect } from "react-redux";
-import { uploadProfilePicture } from "../redux/actions/userActions";
+import { uploadProfilePicture, logoutUser } from "../redux/actions/userActions";
 
 //Components
 import SideBarComponent from "../components/DashboardSidebar";
 import TopHeader from "../components/TopHeader";
+import Dashboard from "../components/InstructorDashboard";
 
 //Utilities
 import { openUploadWidget } from "../utils/CloudinaryService";
@@ -31,12 +32,21 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  useDisclosure
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton
 } from "@chakra-ui/core";
 import AddCourse from "../components/AddCourse";
 
-const SideBar = ({ user, removeBorder, uploadProfilePicture }) => {
+const SideBar = ({ user, removeBorder, uploadProfilePicture, logoutUser }) => {
   const { firstName, lastName, imageUrl, email } = user.credentials;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const elements = [
     <Box>
       <Stack spacing={2} align="center" mb="20px" padding={10}>
@@ -87,23 +97,47 @@ const SideBar = ({ user, removeBorder, uploadProfilePicture }) => {
       <Divider />
     </Box>,
     <Box>
-      <Link to="./addcourse" fontSize="xl" as={ReachLink}>
+      <Link to="addcontent" fontSize="xl" as={ReachLink}>
         <Icon name="plus-square" size="32px" mr="10px" />
         Add Content
       </Link>
       <Divider />
     </Box>,
     <Box>
-      <Link to="/logout" fontSize="xl" as={ReachLink}>
+      <Link to="" fontSize="xl" as={ReachLink} onClick={onOpen}>
         <Icon name="close" mr="10px" />
         Logout
       </Link>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Logout</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Proceed to Log out?</Text>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button variant="ghost" mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              as={Link}
+              to="/signin"
+              variantColor="red"
+              onClick={logoutUser}
+            >
+              Logout
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   ];
   return <SideBarComponent elements={elements} removeBorder={removeBorder} />;
 };
 
-const InstructorPanel = ({ user, UI, uploadProfilePicture }) => {
+const InstructorPanel = ({ user, UI, uploadProfilePicture, logoutUser }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
@@ -124,16 +158,22 @@ const InstructorPanel = ({ user, UI, uploadProfilePicture }) => {
               user={user}
               removeBorder={true}
               uploadProfilePicture={uploadProfilePicture}
+              logoutUser={logoutUser}
             />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
       <Box display={{ md: "flex" }}>
         <Box display={{ base: "none", md: "block" }}>
-          <SideBar user={user} uploadProfilePicture={uploadProfilePicture} />
+          <SideBar
+            user={user}
+            uploadProfilePicture={uploadProfilePicture}
+            logoutUser={logoutUser}
+          />
         </Box>
         <Router>
-          <AddCourse path="addcourse" />
+          <AddCourse path="addcontent" />
+          <Dashboard path="/" />
         </Router>
       </Box>
     </Box>
@@ -150,6 +190,6 @@ const mapStateToProps = state => ({
   UI: state.UI
 });
 
-const mapActionsToProps = { uploadProfilePicture };
+const mapActionsToProps = { uploadProfilePicture, logoutUser };
 
 export default connect(mapStateToProps, mapActionsToProps)(InstructorPanel);
