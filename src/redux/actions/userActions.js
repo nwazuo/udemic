@@ -37,6 +37,7 @@ export const loginUser = ({ userType, googleId }) => dispatch => {
 export const signupUser = ({ userType, userData }) => dispatch => {
   //Pesky error that allows user sign up more than once
   dispatch({ type: LOADING_UI });
+  console.log(userData);
   axios
     .post(`/${userType}`, userData, {
       headers: {
@@ -77,7 +78,7 @@ export const getUserData = ({ userType, googleId }) => dispatch => {
   axios
     .get(`/${userType}?googleId=${googleId}`)
     .then(res => {
-      dispatch({ type: SET_USER, payload: res.data });
+      dispatch({ type: SET_USER, payload: res.data[0] });
     })
     .catch(err => console.log(err));
 };
