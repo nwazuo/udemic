@@ -39,11 +39,7 @@ export const signupUser = ({ userType, userData }) => dispatch => {
   dispatch({ type: LOADING_UI });
   console.log(userData);
   axios
-    .post(`/${userType}`, userData, {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+    .post(`/${userType}`, userData)
     .then(res => {
       console.log("axios :", res);
       setAuthenticated(res.data.googleId, userType, Date.now() + 604800);
@@ -79,6 +75,28 @@ export const getUserData = ({ userType, googleId }) => dispatch => {
     .get(`/${userType}?googleId=${googleId}`)
     .then(res => {
       dispatch({ type: SET_USER, payload: res.data[0] });
+    })
+    .catch(err => console.log(err));
+};
+
+export const uploadProfilePicture = (
+  imageUrl,
+  userId,
+  userType
+) => dispatch => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .patch(
+      `/${userType}/${userId}`,
+      { imageUrl },
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    .then(res => {
+      dispatch({ type: SET_USER, payload: res.data });
     })
     .catch(err => console.log(err));
 };

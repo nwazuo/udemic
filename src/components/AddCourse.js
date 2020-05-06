@@ -1,7 +1,10 @@
 import React from "react";
 
+//Chakra UI
+import { Heading } from "@chakra-ui/core";
+
 const AddCourse = () => {
-  return <h1>This is the Course Adding Page</h1>;
+  return <Heading>Add Course</Heading>;
 };
 
 export default AddCourse;

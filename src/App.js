@@ -34,7 +34,7 @@ function App() {
             <Signin path="/signin/:action" />
             {/* funny implementation of a signup route*/}
             <Signin path="/signin" />
-            <AuthPage path="/student" page={<StudentDashboard />} />
+            <AuthPage path="/student/*" page={<StudentDashboard />} />
             <AuthPage path="instructor/*" page={<InstructorDashboard />} />
           </Router>
         </Provider>

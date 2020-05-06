@@ -7,10 +7,14 @@ import { Link as ReachLink, Router } from "@reach/router";
 
 //Redux
 import { connect } from "react-redux";
+import { uploadProfilePicture } from "../redux/actions/userActions";
 
 //Components
 import SideBarComponent from "../components/DashboardSidebar";
 import TopHeader from "../components/TopHeader";
+
+//Utilities
+import { openUploadWidget } from "../utils/CloudinaryService";
 
 //Chakra UI
 import {
@@ -31,7 +35,7 @@ import {
 } from "@chakra-ui/core";
 import AddCourse from "../components/AddCourse";
 
-const SideBar = ({ user, removeBorder }) => {
+const SideBar = ({ user, removeBorder, uploadProfilePicture }) => {
   const { firstName, lastName, imageUrl, email } = user.credentials;
   const elements = [
     <Box>
@@ -42,6 +46,37 @@ const SideBar = ({ user, removeBorder }) => {
           fontWeight="bold"
         >{`${firstName} ${lastName}`}</Text>
         <Text fontSize="xl">({email})</Text>
+        <Button
+          color="white"
+          background="black"
+          onClick={() => {
+            openUploadWidget(
+              {
+                cloudName: "udemic",
+                uploadPreset: "sample",
+                tags: ["Profile-image"],
+                cropping: true,
+                multiple: false,
+                theme: "white"
+              },
+              (error, result) => {
+                if (!error) {
+                  console.log(result[0].url);
+                  uploadProfilePicture(
+                    result[0].url,
+                    user.credentials.id,
+                    "instructor"
+                  );
+                } else {
+                  console.log(error);
+                }
+              }
+            );
+          }}
+        >
+          <Icon name="edit" mr="5px" />
+          Edit Picture
+        </Button>
       </Stack>
     </Box>,
     <Box>
@@ -68,7 +103,7 @@ const SideBar = ({ user, removeBorder }) => {
   return <SideBarComponent elements={elements} removeBorder={removeBorder} />;
 };
 
-const InstructorPanel = ({ user, UI }) => {
+const InstructorPanel = ({ user, UI, uploadProfilePicture }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
@@ -85,13 +120,17 @@ const InstructorPanel = ({ user, UI }) => {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerBody>
-            <SideBar user={user} removeBorder={true} />
+            <SideBar
+              user={user}
+              removeBorder={true}
+              uploadProfilePicture={uploadProfilePicture}
+            />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
       <Box display={{ md: "flex" }}>
         <Box display={{ base: "none", md: "block" }}>
-          <SideBar user={user} />
+          <SideBar user={user} uploadProfilePicture={uploadProfilePicture} />
         </Box>
         <Router>
           <AddCourse path="addcourse" />
@@ -111,4 +150,6 @@ const mapStateToProps = state => ({
   UI: state.UI
 });
 
-export default connect(mapStateToProps)(InstructorPanel);
+const mapActionsToProps = { uploadProfilePicture };
+
+export default connect(mapStateToProps, mapActionsToProps)(InstructorPanel);
