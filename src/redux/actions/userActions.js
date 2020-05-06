@@ -11,9 +11,11 @@ import { navigate } from "@reach/router";
 
 export const loginUser = ({ userType, googleId }) => dispatch => {
   dispatch({ type: LOADING_UI });
+  console.log("Logging in:", userType, googleId);
   axios
     .get(`/${userType}?googleId=${googleId}`)
     .then(res => {
+      console.log("Response: ", res);
       setAuthenticated(googleId, userType, Date.now() + 604800);
       dispatch(getUserData({ userType, googleId }));
       dispatch({ type: CLEAR_ERRORS });
