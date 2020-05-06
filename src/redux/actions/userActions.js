@@ -9,6 +9,10 @@ import {
 import axios from "axios";
 import { navigate } from "@reach/router";
 
+//Axios defaults
+axios.defaults.baseURL = "https://udemic-server.herokuapp.com";
+axios.defaults.headers.common['Content-Type'] = "application/json";
+
 export const loginUser = ({ userType, googleId }) => dispatch => {
   dispatch({ type: LOADING_UI });
   console.log("Logging in:", userType, googleId);
