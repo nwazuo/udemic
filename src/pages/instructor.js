@@ -104,10 +104,10 @@ const SideBar = ({ user, removeBorder, uploadProfilePicture, logoutUser }) => {
       <Divider />
     </Box>,
     <Box>
-      <Link to="" fontSize="xl" as={ReachLink} onClick={onOpen}>
+      <Button fontSize="xl" onClick={onOpen}>
         <Icon name="close" mr="10px" />
         Logout
-      </Link>
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
