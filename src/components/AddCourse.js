@@ -40,7 +40,7 @@ import * as Yup from "yup";
 axios.defaults.baseURL = "https://udemic-server.herokuapp.com";
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
-const TutForm = ({ googleId }) => {
+const TutForm = ({ googleId, firstName, lastName }) => {
   const [videoInfo, setVideoInfo] = useState();
   //Code to open upload success modal
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -95,7 +95,8 @@ const TutForm = ({ googleId }) => {
             category,
             title,
             description,
-            createdBy: googleId
+            createdBy: googleId,
+            instructorName: `${lastName} ${firstName}`
           };
 
           axios.post("/tutorial", tutorialInfo).then(res => {
@@ -159,9 +160,10 @@ const TutForm = ({ googleId }) => {
                 backgroundColor="gray.100"
                 width="auto"
                 maxWidth="auto"
+                mt={6}
               >
                 <Image src={videoInfo.thumbnail} ruonded="lg" />
-                <Text mt="" fontSize="sm" fontWeight="semibold">
+                <Text mt="5px" fontSize="sm" fontWeight="semibold">
                   Video added
                 </Text>
               </Box>
@@ -185,13 +187,22 @@ const TutForm = ({ googleId }) => {
           <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick="false">
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Content Added Successfully</ModalHeader>
+              <ModalHeader textAlign="center">
+                Content Added Successfully
+              </ModalHeader>
               <ModalBody textAlign="center">
                 <Icon name="check-circle" size="48px" color="green.400" />
               </ModalBody>
 
               <ModalFooter textAlign="center">
-                <Button backgroundColor="black" color="white">
+                <Button
+                  backgroundColor="black"
+                  mx="auto"
+                  color="white"
+                  onClick={() => {
+                    window.location = "/instructor";
+                  }}
+                >
                   Proceed
                 </Button>
               </ModalFooter>
@@ -203,24 +214,32 @@ const TutForm = ({ googleId }) => {
   );
 };
 
-const AddCourse = ({ googleId }) => {
+const AddCourse = ({ googleId, firstName, lastName }) => {
   return (
     <Box mx="auto" maxWidth={{ base: "90%", md: "52rem" }}>
       <Heading mt={{ base: "30px", md: "50px" }}>Add New Course</Heading>
       <Text>Create a new single-video course</Text>
-      <Box>
-        <TutForm googleId={googleId} />
+      <Box mt={6}>
+        <TutForm
+          googleId={googleId}
+          firstName={firstName}
+          lastName={lastName}
+        />
       </Box>
     </Box>
   );
 };
 
 AddCourse.propTypes = {
-  googleId: PropTypes.string.isRequired
+  googleId: PropTypes.string.isRequired,
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
-  googleId: state.user.credentials.googleId
+  googleId: state.user.credentials.googleId,
+  firstName: state.user.credentials.firstName,
+  lastName: state.user.credentials.lastName
 });
 
 export default connect(mapStateToProps)(AddCourse);
