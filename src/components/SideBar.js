@@ -11,13 +11,14 @@ import Logo from "../assets/website-logo.svg";
 //Redux
 import { connect } from "react-redux";
 
-const Dashboard = ({ user, elements, removeBorder }) => {
+const SideBar = ({ user, elements, removeBorder }) => {
   return (
     <Box
       maxWidth={{ md: "18rem" }}
       textAlign="center"
       borderRightWidth={removeBorder ? "0" : "1px"}
       height="100vh"
+      position={{ md: "fixed" }}
     >
       <Box
         borderBottomWidth="1px"
@@ -34,7 +35,7 @@ const Dashboard = ({ user, elements, removeBorder }) => {
   );
 };
 
-Dashboard.propTypes = {
+SideBar.propTypes = {
   user: PropTypes.object.isRequired,
   elements: PropTypes.array.isRequired,
   removeBorder: PropTypes.bool
@@ -44,4 +45,4 @@ const mapStatetoProps = state => ({
   user: state.user
 });
 
-export default connect(mapStatetoProps)(Dashboard);
+export default connect(mapStatetoProps)(SideBar);

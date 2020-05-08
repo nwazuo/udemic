@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { uploadProfilePicture, logoutUser } from "../redux/actions/userActions";
 
 //Components
-import SideBarComponent from "../components/DashboardSidebar";
+import SideBarComponent from "../components/SideBar";
 import TopHeader from "../components/TopHeader";
 import Catalogue from "../components/Catalogue";
 import Favorites from "../components/Favorites";
@@ -171,7 +171,7 @@ const StudentPanel = ({ user, UI, uploadProfilePicture, logoutUser }) => {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-      <Box display={{ md: "flex" }}>
+      <Box>
         <Box display={{ base: "none", md: "block" }}>
           <SideBar
             user={user}
@@ -179,11 +179,13 @@ const StudentPanel = ({ user, UI, uploadProfilePicture, logoutUser }) => {
             logoutUser={logoutUser}
           />
         </Box>
-        <Router>
-          <Catalogue path="catalogue" />
-          <Favorites path="favorites" />
-          <Dashboard path="/" />
-        </Router>
+        <Box pt={{ base: "10px", md: "40px" }} pl={{ md: "18rem" }}>
+          <Router>
+            <Catalogue path="catalogue" />
+            <Favorites path="favorites" />
+            <Dashboard path="/" />
+          </Router>
+        </Box>
       </Box>
     </Box>
   );

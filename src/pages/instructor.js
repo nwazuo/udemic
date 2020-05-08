@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { uploadProfilePicture, logoutUser } from "../redux/actions/userActions";
 
 //Components
-import SideBarComponent from "../components/DashboardSidebar";
+import SideBarComponent from "../components/SideBar";
 import TopHeader from "../components/TopHeader";
 import Dashboard from "../components/InstructorDashboard";
 
@@ -163,7 +163,7 @@ const InstructorPanel = ({ user, UI, uploadProfilePicture, logoutUser }) => {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-      <Box display={{ md: "flex" }}>
+      <Box>
         <Box display={{ base: "none", md: "block" }}>
           <SideBar
             user={user}
@@ -171,10 +171,12 @@ const InstructorPanel = ({ user, UI, uploadProfilePicture, logoutUser }) => {
             logoutUser={logoutUser}
           />
         </Box>
-        <Router>
-          <AddCourse path="addcontent" />
-          <Dashboard path="/" />
-        </Router>
+        <Box pt={{ base: "10px", md: "40px" }} pl={{ md: "18rem" }}>
+          <Router>
+            <AddCourse path="addcontent" />
+            <Dashboard path="/" />
+          </Router>
+        </Box>
       </Box>
     </Box>
   );
