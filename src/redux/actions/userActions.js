@@ -17,7 +17,7 @@ export const loginUser = ({ userType, googleId }) => dispatch => {
   dispatch({ type: LOADING_UI });
   console.log("Logging in:", userType, googleId);
   axios
-    .get(`/${userType}?googleId=${googleId}`)
+    .get(`/${userType}s?googleId=${googleId}`)
     .then(res => {
       console.log("Response: ", res);
       setAuthenticated(googleId, userType, Date.now() + 604800);
@@ -45,7 +45,7 @@ export const signupUser = ({ userType, userData }) => dispatch => {
   dispatch({ type: LOADING_UI });
   console.log(userData);
   axios
-    .post(`/${userType}`, userData)
+    .post(`/${userType}s`, userData)
     .then(res => {
       console.log("axios :", res);
       setAuthenticated(res.data.googleId, userType, Date.now() + 604800);
@@ -78,7 +78,7 @@ export const logoutUser = () => dispatch => {
 export const getUserData = ({ userType, googleId }) => dispatch => {
   dispatch({ type: LOADING_USER });
   axios
-    .get(`/${userType}?googleId=${googleId}`)
+    .get(`/${userType}s?googleId=${googleId}`)
     .then(res => {
       dispatch({ type: SET_USER, payload: res.data[0] });
     })
@@ -93,7 +93,7 @@ export const uploadProfilePicture = (
   dispatch({ type: LOADING_UI });
   axios
     .patch(
-      `/${userType}/${userId}`,
+      `/${userType}s/${userId}`,
       { imageUrl },
       {
         headers: {

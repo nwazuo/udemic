@@ -106,7 +106,7 @@ const SideBar = ({ user, removeBorder, uploadProfilePicture, logoutUser }) => {
     </Box>,
     <Box>
       <Link to="./favorites" fontSize="xl" as={ReachLink}>
-        <Icon name="star" size="32px" mr="10px" />
+        <Icon name="check" size="32px" mr="10px" />
         Favorites
       </Link>
       <Divider />

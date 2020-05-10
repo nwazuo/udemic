@@ -46,7 +46,7 @@ const ContentList = ({ googleId }) => {
     async function fetchData() {
       let newData;
       if (googleId !== undefined) {
-        newData = await get(`/tutorial?createdBy=${googleId}`);
+        newData = await get(`/tutorials?createdBy=${googleId}`);
       }
       if (response.ok) setVideoData(newData);
     }
@@ -59,72 +59,76 @@ const ContentList = ({ googleId }) => {
     <Box>
       {loading ? (
         "loading"
-      ) : videoData ? (
-        <Stack mt={6}>
-          {videoData.map(
-            ({
-              id,
-              videoUrl,
-              createdAt,
-              starsCount,
-              thumbnail,
-              category,
-              title,
-              instructorName
-            }) => (
-              <Box
-                p={4}
-                display={{ md: "flex" }}
-                borderWidth="1px"
-                rounded="lg"
-              >
-                <Box flexShrink="0">
-                  <Image
-                    rounded="lg"
-                    width={{ base: "100%", md: 40 }}
-                    objectFit="cover"
-                    src={thumbnail}
-                    alt={title}
-                  />
+      ) : videoData !== undefined ? (
+        JSON.stringify(videoData) === JSON.stringify([]) ? (
+          "You have no content"
+        ) : (
+          <Stack mt={6}>
+            {videoData.map(
+              ({
+                id,
+                videoUrl,
+                createdAt,
+                starsCount,
+                thumbnail,
+                category,
+                title,
+                instructorName
+              }) => (
+                <Box
+                  p={4}
+                  display={{ md: "flex" }}
+                  borderWidth="1px"
+                  rounded="lg"
+                >
+                  <Box flexShrink="0">
+                    <Image
+                      rounded="lg"
+                      width={{ base: "100%", md: 40 }}
+                      objectFit="cover"
+                      src={thumbnail}
+                      alt={title}
+                    />
+                  </Box>
+                  <Box mt={{ base: 4, md: 0 }} ml={{ md: 6 }}>
+                    <Badge fontSize="0.8em" variantColor="green">
+                      {category}
+                    </Badge>
+                    <Link
+                      as={ReachLink}
+                      mt={1}
+                      display="block"
+                      fontSize="lg"
+                      lineHeight="normal"
+                      fontWeight="semibold"
+                      to="/lord knows"
+                    >
+                      {title}
+                    </Link>
+                    <Stack isInline pt={4} spacing={{ md: 5 }}>
+                      <Box display="flex">
+                        <Icon name="time" mr={1} />
+                        <Text lineHeight={1}>{dayjs(createdAt).fromNow()}</Text>
+                      </Box>
+                      <Box display="flex">
+                        <Icon name="star" color="yellow.200" mr={1} />
+                        <Text lineHeight={1}>{`(${starsCount})`}</Text>
+                      </Box>
+                      <Box display="flex">
+                        <Icon name="info-outline" mr={1} />
+                        <Text lineHeight={1} fontWeight="semibold">
+                          {instructorName}
+                        </Text>
+                      </Box>
+                    </Stack>
+                  </Box>
                 </Box>
-                <Box mt={{ base: 4, md: 0 }} ml={{ md: 6 }}>
-                  <Badge fontSize="0.8em" variantColor="green">
-                    {category}
-                  </Badge>
-                  <Link
-                    as={ReachLink}
-                    mt={1}
-                    display="block"
-                    fontSize="lg"
-                    lineHeight="normal"
-                    fontWeight="semibold"
-                    to="/lord knows"
-                  >
-                    {title}
-                  </Link>
-                  <Stack isInline pt={4}>
-                    <Box display="flex">
-                      <Icon name="time" mr={1} />
-                      <Text lineHeight={1}>{dayjs(createdAt).fromNow()}</Text>
-                    </Box>
-                    <Box display="flex">
-                      <Icon name="star" color="yellow.200" mr={1} />
-                      <Text lineHeight={1}>{`(${starsCount})`}</Text>
-                    </Box>
-                    <Box display="flex">
-                      <Icon name="info-outline" mr={1} />
-                      <Text lineHeight={1} fontWeight="semibold">
-                        {instructorName}
-                      </Text>
-                    </Box>
-                  </Stack>
-                </Box>
-              </Box>
-            )
-          )}
-        </Stack>
+              )
+            )}
+          </Stack>
+        )
       ) : (
-        "loading"
+        "nothing to show"
       )}
     </Box>
   );

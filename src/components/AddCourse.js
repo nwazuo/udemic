@@ -99,7 +99,7 @@ const TutForm = ({ googleId, firstName, lastName }) => {
             instructorName: `${lastName} ${firstName}`
           };
 
-          axios.post("/tutorial", tutorialInfo).then(res => {
+          axios.post("/tutorials", tutorialInfo).then(res => {
             console.log(res);
             onOpen();
           });
