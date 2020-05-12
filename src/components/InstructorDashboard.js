@@ -46,7 +46,7 @@ const ContentList = ({ googleId }) => {
     async function fetchData() {
       let newData;
       if (googleId !== undefined) {
-        newData = await get(`/tutorials?createdBy=${googleId}`);
+        newData = await get(`/videos?createdBy=${googleId}`);
       }
       if (response.ok) setVideoData(newData);
     }

@@ -12,7 +12,6 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  FormHelperText,
   useDisclosure,
   Input,
   Textarea,
@@ -87,7 +86,7 @@ const TutForm = ({ googleId, firstName, lastName }) => {
         if (!errors) {
           let { category, title, description } = values;
           let uploadTime = new Date().toISOString();
-          let tutorialInfo = {
+          let videoData = {
             videoUrl: videoInfo.url,
             createdAt: uploadTime,
             starsCount: 0,
@@ -99,11 +98,11 @@ const TutForm = ({ googleId, firstName, lastName }) => {
             instructorName: `${lastName} ${firstName}`
           };
 
-          axios.post("/tutorials", tutorialInfo).then(res => {
+          axios.post("/videos", videoData).then(res => {
             console.log(res);
             onOpen();
           });
-          console.log(tutorialInfo);
+          console.log(videoData);
         }
       }}
     >

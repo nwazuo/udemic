@@ -8,6 +8,7 @@ import {
 } from "../types";
 import axios from "axios";
 import { navigate } from "@reach/router";
+import { getData, echo } from "../actions/dataActions";
 
 //Axios defaults
 axios.defaults.baseURL = "https://udemic-server.herokuapp.com";
@@ -81,6 +82,9 @@ export const getUserData = ({ userType, googleId }) => dispatch => {
     .get(`/${userType}s?googleId=${googleId}`)
     .then(res => {
       dispatch({ type: SET_USER, payload: res.data[0] });
+      if (userType === "student") {
+        getData(res.data[0].id)(dispatch);
+      }
     })
     .catch(err => console.log(err));
 };

@@ -36,9 +36,7 @@ export const Signup = ({ userType, success, failure }) => {
         googleId,
         imageUrl,
         lastName: familyName,
-        firstName: givenName,
-        starred: [],
-        favorites: []
+        firstName: givenName
       };
     } else if (userType === "instructor") {
       userData = {
