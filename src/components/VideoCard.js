@@ -9,10 +9,20 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 //Chakra UI
-import { Box, Text, Image, Link, Badge, Stack, Icon } from "@chakra-ui/core";
+import {
+  Box,
+  Text,
+  Image,
+  Link,
+  Badge,
+  Stack,
+  Icon,
+  Button
+} from "@chakra-ui/core";
 
 //Components
 import StarButton from "./StarButton";
+import FavoriteButton from "./FavoriteButton";
 
 const VideoCard = ({ videoData, loading }) => {
   //let sneak this in here
@@ -45,7 +55,22 @@ const VideoCard = ({ videoData, loading }) => {
                 display={{ md: "flex" }}
                 borderWidth="1px"
                 rounded="lg"
+                position="relative"
               >
+                <FavoriteButton
+                  video={{
+                    id,
+                    videoUrl,
+                    createdAt,
+                    starsCount,
+                    thumbnail,
+                    category,
+                    title,
+                    instructorName,
+                    description,
+                    createdBy
+                  }}
+                />
                 <Box flexShrink="0">
                   <Image
                     rounded="lg"

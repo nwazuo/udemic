@@ -50,6 +50,7 @@ export const getData = studentId => dispatch => {
 
 //Get single video for student to view
 export const getVideo = id => dispatch => {
+  //Instructor star stats, views count
   dispatch({ type: LOADING_DATA });
   axios
     .get(`/videos/${id}`)
@@ -66,7 +67,7 @@ export const getVideo = id => dispatch => {
 };
 
 //add video to favorites
-export const favoriteVideo = (video, studentId, favorites) => dispatch => {
+export const favoriteVideo = (video, studentId, onFinish) => dispatch => {
   console.log("I was dispatched");
   // let exists = favorites.findIndex(
   //   (favorite) => favorite.videoId === video.id
@@ -87,13 +88,14 @@ export const favoriteVideo = (video, studentId, favorites) => dispatch => {
         dispatch({ type: FAVORITE_VIDEO, payload });
         console.log(payload);
         dispatch({ type: STOP_LOADING_TINY_CHANGE });
+        if (onFinish) onFinish();
       });
     })
     .catch(err => console.log(err));
 };
 
 //remove video from favorites
-export const unfavoriteVideo = (video, favorites) => dispatch => {
+export const unfavoriteVideo = (video, favorites, onFinish) => dispatch => {
   console.log("unfavoriting video");
   console.log(favorites);
   dispatch({ type: LOADING_TINY_CHANGE });
@@ -109,6 +111,7 @@ export const unfavoriteVideo = (video, favorites) => dispatch => {
 
       dispatch({ type: UNFAVORITE_VIDEO, payload: payload });
       dispatch({ type: STOP_LOADING_TINY_CHANGE });
+      if (onFinish) onFinish();
     })
     .catch(err => console.log(err));
 };
