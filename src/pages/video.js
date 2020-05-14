@@ -8,7 +8,18 @@ import { navigate } from "@reach/router";
 import TopHeader from "../components/TopHeader";
 
 //Chakra UI
-import { Heading, Text, Box, Button, Icon, Badge } from "@chakra-ui/core";
+import {
+  Heading,
+  Text,
+  Box,
+  Button,
+  Icon,
+  Badge,
+  Spinner
+} from "@chakra-ui/core";
+
+//Cloudinary
+import { Video as DisplayVideo } from "cloudinary-react";
 
 //Redux
 import { connect } from "react-redux";
@@ -37,38 +48,51 @@ const Video = ({ videoId, video, getVideo, loading, dispatch }) => {
           <Icon name="arrow-back" mr={2} />
           Back
         </Button>
-        <Heading mt={5}>{video.title}</Heading>
-        <Badge fontSize="0.8em" variantColor="green">
-          {video.category}
-        </Badge>
-        <Box display="flex" mt={3}>
-          <Icon name="info-outline" mr={1} />
-          <Text lineHeight={1} fontWeight="semibold">
-            {video.instructorName}
-          </Text>
-        </Box>
-        <Box mt={6}>
-          <video
-            src={video.videoUrl}
-            id="player"
-            controls
-            autoplay
-            class="cld-video-player cld-fluid"
-            width="100%"
-          ></video>
-        </Box>
-        <Heading size="lg" mt={5}>
-          Description
-        </Heading>
-        <Text>{video.description}</Text>
+        {loading ? (
+          <Box textAlign="center">
+            <Spinner />
+          </Box>
+        ) : (
+          <>
+            <Box width={{ base: "90%", md: "100%" }} mx="auto">
+              <Heading mt={5}>{video.title}</Heading>
+              <Badge fontSize="0.8em" variantColor="green">
+                {video.category}
+              </Badge>
+              <Box display="flex" mt={3}>
+                <Icon name="info-outline" mr={1} />
+                <Text lineHeight={1} fontWeight="semibold">
+                  {video.instructorName}
+                </Text>
+              </Box>
+            </Box>
+            <Box mt={6}>
+              {JSON.stringify(video) !== "{}" ? (
+                <DisplayVideo
+                  publicId={video.publicId}
+                  cloudName="udemic"
+                  controls={true}
+                  class="video"
+                  width="100%"
+                ></DisplayVideo>
+              ) : (
+                ""
+              )}
+            </Box>
+            <Box width={{ base: "90%", md: "100%" }} mx="auto">
+              <Heading size="lg" mt={5}>
+                Description
+              </Heading>
+              <Text>{video.description}</Text>
+            </Box>
+          </>
+        )}
       </Box>
     </>
   );
 };
 
-Video.propTypes = {
-  videoId: PropTypes.isRequired
-};
+Video.propTypes = {};
 
 const mapStateToProps = state => ({
   user: state.user.credentials,

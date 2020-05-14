@@ -15,7 +15,7 @@ import TopHeader from "../components/TopHeader";
 import Dashboard from "../components/InstructorDashboard";
 
 //Utilities
-import { openUploadWidget } from "../utils/CloudinaryService";
+import { createUploadWidget } from "../utils/CloudinaryService";
 
 //Chakra UI
 import {
@@ -47,6 +47,29 @@ const SideBar = ({ user, removeBorder, uploadProfilePicture, logoutUser }) => {
   const { firstName, lastName, imageUrl, email } = user.credentials;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const createWidget = createUploadWidget(
+    {
+      cloudName: "udemic",
+      uploadPreset: "sample",
+      tags: ["Profile-image"],
+      cropping: true,
+      multiple: false,
+      theme: "white"
+    },
+    (error, result) => {
+      if (!error) {
+        console.log(result[0].url);
+        uploadProfilePicture(result[0].url, user.credentials.id, "instructor");
+      } else {
+        console.log(error);
+      }
+    }
+  );
+
+  const handleImageUpload = () => {
+    createWidget.open();
+  };
+
   const elements = [
     <Box>
       <Stack spacing={2} align="center" mb="20px" padding={10}>
@@ -56,34 +79,7 @@ const SideBar = ({ user, removeBorder, uploadProfilePicture, logoutUser }) => {
           fontWeight="bold"
         >{`${firstName} ${lastName}`}</Text>
         <Text fontSize="xl">({email})</Text>
-        <Button
-          color="white"
-          background="black"
-          onClick={() => {
-            openUploadWidget(
-              {
-                cloudName: "udemic",
-                uploadPreset: "sample",
-                tags: ["Profile-image"],
-                cropping: true,
-                multiple: false,
-                theme: "white"
-              },
-              (error, result) => {
-                if (!error) {
-                  console.log(result[0].url);
-                  uploadProfilePicture(
-                    result[0].url,
-                    user.credentials.id,
-                    "instructor"
-                  );
-                } else {
-                  console.log(error);
-                }
-              }
-            );
-          }}
-        >
+        <Button color="white" background="black" onClick={handleImageUpload}>
           <Icon name="edit" mr="5px" />
           Edit Picture
         </Button>

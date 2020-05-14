@@ -11,7 +11,8 @@ import {
   TabList,
   TabPanels,
   Tab,
-  TabPanel
+  TabPanel,
+  Spinner
 } from "@chakra-ui/core";
 
 //Assets
@@ -38,6 +39,21 @@ const Signin = ({ loginUser, signupUser, UI, user, action }) => {
 
   return (
     <Box height="100vh">
+      {UI.loading ? (
+        <Box
+          position="absolute"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          width="100%"
+          height="100%"
+          background="rgba(255,255,255,0.7)"
+        >
+          <Spinner thickness="4px" size="xl" />
+        </Box>
+      ) : (
+        ""
+      )}
       <TopHeader />
       <Box
         marginX="auto"

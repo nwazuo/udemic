@@ -8,6 +8,9 @@ import { ThemeProvider } from "emotion-theming";
 //Reach Router
 import { Router } from "@reach/router";
 
+//Cloudinary
+import { CloudinaryContext } from "cloudinary-react";
+
 //Redux
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -29,16 +32,18 @@ function App() {
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <CSSReset />
-          <Router>
-            <Signin path="/" />
-            <Signin path="/signin/:action" />
-            {/* funny implementation of a signup route*/}
-            <Signin path="/signin" />
-            <AuthPage path="/student/*" page={<StudentDashboard />} />
-            <AuthPage path="instructor/*" page={<InstructorDashboard />} />
-            <Video path="/video/:videoId" />
-          </Router>
+          <CloudinaryContext cloudName="udemic" uploadPreset="sample">
+            <CSSReset />
+            <Router>
+              <Signin path="/" />
+              <Signin path="/signin/:action" />
+              {/* funny implementation of a signup route*/}
+              <Signin path="/signin" />
+              <AuthPage path="/student/*" page={<StudentDashboard />} />
+              <AuthPage path="instructor/*" page={<InstructorDashboard />} />
+              <Video path="/video/:videoId" />
+            </Router>
+          </CloudinaryContext>
         </Provider>
       </ThemeProvider>
     </React.StrictMode>

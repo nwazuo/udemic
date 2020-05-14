@@ -6,6 +6,7 @@ import {
   STAR_VIDEO,
   UNSTAR_VIDEO,
   LOADING_DATA,
+  STOP_LOADING_DATA,
   LOADING_TINY_CHANGE,
   STOP_LOADING_TINY_CHANGE
 } from "../types";
@@ -37,6 +38,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: true
+      };
+
+    case STOP_LOADING_DATA:
+      return {
+        ...state,
+        loading: false
       };
     case SET_DATA:
       return {

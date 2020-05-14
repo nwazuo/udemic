@@ -5,6 +5,7 @@ import {
   STAR_VIDEO,
   UNSTAR_VIDEO,
   LOADING_DATA,
+  STOP_LOADING_DATA,
   SET_VIDEO,
   SET_ERRORS,
   STOP_LOADING_UI,
@@ -59,7 +60,7 @@ export const getVideo = id => dispatch => {
         type: SET_VIDEO,
         payload: res.data
       });
-      dispatch({ type: STOP_LOADING_UI });
+      dispatch({ type: STOP_LOADING_DATA });
     })
     .catch(err => {
       console.log(err);
