@@ -17,6 +17,7 @@ import { logoutUser, getUserData } from "./redux/actions/userActions";
 //Pages
 import Signin from "./pages/signin";
 import Home from "./pages/home";
+import Video from "./pages/video";
 
 //Components
 import StudentDashboard from "./pages/student";
@@ -36,6 +37,7 @@ function App() {
             <Signin path="/signin" />
             <AuthPage path="/student/*" page={<StudentDashboard />} />
             <AuthPage path="instructor/*" page={<InstructorDashboard />} />
+            <Video path="/video/:videoId" />
           </Router>
         </Provider>
       </ThemeProvider>

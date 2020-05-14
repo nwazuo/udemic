@@ -56,10 +56,10 @@ const TutForm = ({ googleId, firstName, lastName }) => {
     (error, result) => {
       if (!error) {
         console.log(result);
-        let { url, path } = result[0];
+        let { url, path, public_id } = result[0];
         let pathJpg = path.replace(/\.\w*/, ".jpg");
         let thumbnail = `https://res.cloudinary.com/udemic/video/upload/w_200,h_200,c_fit/${pathJpg}`;
-        let info = { thumbnail, url };
+        let info = { thumbnail, url, public_id };
         console.log(thumbnail);
         setVideoInfo(info);
       }
@@ -88,6 +88,7 @@ const TutForm = ({ googleId, firstName, lastName }) => {
           let uploadTime = new Date().toISOString();
           let videoData = {
             videoUrl: videoInfo.url,
+            publicId: videoInfo.public_id,
             createdAt: uploadTime,
             starsCount: 0,
             thumbnail: videoInfo.thumbnail,

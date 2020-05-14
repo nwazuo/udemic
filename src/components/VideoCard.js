@@ -91,7 +91,7 @@ const VideoCard = ({ videoData, loading }) => {
                     fontSize="lg"
                     lineHeight="normal"
                     fontWeight="semibold"
-                    to="/lord knows"
+                    to={`/video/${id}`}
                   >
                     {title}
                   </Link>
