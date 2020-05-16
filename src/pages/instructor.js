@@ -39,13 +39,15 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton
+  ModalCloseButton,
+  useToast
 } from "@chakra-ui/core";
 import AddCourse from "../components/AddCourse";
 
 const SideBar = ({ user, removeBorder, uploadProfilePicture, logoutUser }) => {
   const { firstName, lastName, imageUrl, email } = user.credentials;
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
   const createWidget = createUploadWidget(
     {
@@ -59,7 +61,18 @@ const SideBar = ({ user, removeBorder, uploadProfilePicture, logoutUser }) => {
     (error, result) => {
       if (!error) {
         console.log(result[0].url);
-        uploadProfilePicture(result[0].url, user.credentials.id, "instructor");
+        uploadProfilePicture(
+          result[0].url,
+          user.credentials.id,
+          "instructor",
+          toast({
+            title: "Profile Photo Changed",
+            description: "Successully uploaded profile photo",
+            status: "success",
+            duration: 3000,
+            isClosable: true
+          })
+        );
       } else {
         console.log(error);
       }

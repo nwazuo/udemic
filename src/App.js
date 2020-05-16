@@ -39,9 +39,15 @@ function App() {
               <Signin path="/signin/:action" />
               {/* funny implementation of a signup route*/}
               <Signin path="/signin" />
-              <AuthPage path="/student/*" page={<StudentDashboard />} />
-              <AuthPage path="instructor/*" page={<InstructorDashboard />} />
-              <Video path="/video/:videoId" />
+              <AuthPage path="/student/*" page={() => <StudentDashboard />} />
+              <AuthPage
+                path="instructor/*"
+                page={() => <InstructorDashboard />}
+              />
+              <AuthPage
+                path="/video/:videoId"
+                page={videoId => <Video videoId={videoId} />}
+              />
             </Router>
           </CloudinaryContext>
         </Provider>

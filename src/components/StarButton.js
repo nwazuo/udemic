@@ -24,7 +24,7 @@ const StarButton = ({
   console.log(video);
 
   return (
-    <Box display="flex" mr={{ base: 3, md: 5 }}>
+    <Box display="flex" mr={{ base: 3, md: 5 }} justifyContent="center">
       {starredVideo() ? (
         <IconButton
           minWidth="auto"

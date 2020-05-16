@@ -6,6 +6,8 @@ import { navigate } from "@reach/router";
 
 //Components
 import TopHeader from "../components/TopHeader";
+import StarButton from "../components/StarButton";
+import FavoriteButton from "../components/FavoriteButton";
 
 //Chakra UI
 import {
@@ -25,7 +27,7 @@ import { Video as DisplayVideo } from "cloudinary-react";
 import { connect } from "react-redux";
 import { getVideo } from "../redux/actions/dataActions";
 
-const Video = ({ videoId, video, getVideo, loading, dispatch }) => {
+const Video = ({ videoId, video, getVideo, loading, dispatch, user }) => {
   // let cld = window.cloudinary.Cloudinary.new({ cloud_name: "udemic" });
   // console.log(cld);
   // let player = cld.videoPlayer("player");
@@ -41,7 +43,7 @@ const Video = ({ videoId, video, getVideo, loading, dispatch }) => {
       <Box maxWidth={{ base: "100%", md: "50%" }} mx="auto">
         <Button
           variant="outline"
-          borderColor="gray.100"
+          borderColor="gray.200"
           mt={5}
           onClick={() => navigate(-1)}
         >
@@ -72,13 +74,39 @@ const Video = ({ videoId, video, getVideo, loading, dispatch }) => {
                   publicId={video.publicId}
                   cloudName="udemic"
                   controls={true}
-                  class="video"
+                  className="video"
                   width="100%"
                 ></DisplayVideo>
               ) : (
                 ""
               )}
             </Box>
+            {localStorage.userType === "student" ? (
+              <Box
+                width={{ base: "90%", md: "100%" }}
+                mx="auto"
+                display="flex"
+                border="1px"
+                rounded="lg"
+                mt={5}
+                borderColor="gray.200"
+              >
+                <Box flexBasis="50%" textAlign="center" padding="10px">
+                  <StarButton video={video} />
+                </Box>
+                <Box
+                  flexBasis="50%"
+                  textAlign="center"
+                  padding="10px"
+                  borderLeft="1px"
+                  borderColor="gray.200"
+                >
+                  <FavoriteButton video={video} noPositionAbsolute={true} />
+                </Box>
+              </Box>
+            ) : (
+              ""
+            )}
             <Box width={{ base: "90%", md: "100%" }} mx="auto">
               <Heading size="lg" mt={5}>
                 Description

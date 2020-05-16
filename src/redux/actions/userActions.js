@@ -20,6 +20,11 @@ export const loginUser = ({ userType, googleId }) => dispatch => {
   axios
     .get(`/${userType}s?googleId=${googleId}`)
     .then(res => {
+      if (res.data.length === 0) {
+        throw Error("Please Sign Up!");
+      }
+    })
+    .then(res => {
       console.log("Response: ", res);
       setAuthenticated(googleId, userType, Date.now() + 604800);
       dispatch(getUserData({ userType, googleId }));
@@ -28,16 +33,15 @@ export const loginUser = ({ userType, googleId }) => dispatch => {
       navigate(`/${userType}`);
     })
     .catch(err => {
-      console.log({ err });
-      const { message } = err;
+      console.log(err);
       const errObj = {
-        general: "Something went wrong, Try again!",
-        message
+        general: err
       };
       dispatch({
         type: SET_ERRORS,
         payload: errObj
       });
+      navigate("/signin/signup");
     });
 };
 
@@ -92,7 +96,8 @@ export const getUserData = ({ userType, googleId }) => dispatch => {
 export const uploadProfilePicture = (
   imageUrl,
   userId,
-  userType
+  userType,
+  onFinish
 ) => dispatch => {
   dispatch({ type: LOADING_UI });
   axios
@@ -107,6 +112,7 @@ export const uploadProfilePicture = (
     )
     .then(res => {
       dispatch({ type: SET_USER, payload: res.data });
+      if (onFinish) onFinish();
     })
     .catch(err => console.log(err));
 };

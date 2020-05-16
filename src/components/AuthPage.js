@@ -12,7 +12,7 @@ import store from "../redux/store";
 //Reach Router
 import { Router } from "@reach/router";
 
-const AuthPage = ({ page }) => {
+const AuthPage = ({ page, videoId }) => {
   console.log("I came here");
   let isLoggedIn = localStorage.googleId; //Google ID acts as a form of authentication token(very unsafe thing to do)
   let expired = localStorage.sessionExpires;
@@ -22,7 +22,9 @@ const AuthPage = ({ page }) => {
     store.dispatch({ type: SET_AUTHENTICATED });
     store.dispatch(getUserData({ userType, googleId: isLoggedIn }));
     //render provided page
-    return page;
+    if (videoId) {
+      return page(videoId);
+    } else return page();
   } else {
     store.dispatch(logoutUser());
     return <h1>KiKI</h1>;

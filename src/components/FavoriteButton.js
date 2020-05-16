@@ -14,7 +14,8 @@ const FavoriteButton = ({
   loadingTinyChange,
   studentId,
   favoriteVideo,
-  unfavoriteVideo
+  unfavoriteVideo,
+  noPositionAbsolute
 }) => {
   const toast = useToast();
   const favoritedVideo = () => {
@@ -28,7 +29,7 @@ const FavoriteButton = ({
 
   return (
     <Box
-      position="absolute"
+      position={noPositionAbsolute ? null : "absolute"}
       top={{ base: "30px", md: "10px" }}
       left={{ base: "30px", md: "auto" }}
       right={{ base: "auto", md: "10px" }}

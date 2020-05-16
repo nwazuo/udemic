@@ -19,6 +19,6 @@ const store = createStore(
   reducers,
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
-); //I don't exactly get what this guy does
+); //I don't exactly get what this guy does. Okay maybe I do now!
 
 export default store;
