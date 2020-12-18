@@ -1,4 +1,6 @@
 # UDEMIC 
 
-Udemic is a project for a virtual internship at Venture Garden Group Limited. 
+Online learning platform practice project. 
+
+[Live Link](https://udemic.herokuapp.com)
 
