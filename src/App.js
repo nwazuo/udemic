@@ -35,7 +35,7 @@ function App() {
           <CloudinaryContext cloudName="udemic" uploadPreset="sample">
             <CSSReset />
             <Router>
-              <Signin path="/" />
+              <Home path="/" />
               <Signin path="/signin/:action" />
               {/* funny implementation of a signup route*/}
               <Signin path="/signin" />
