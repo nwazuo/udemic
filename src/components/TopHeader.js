@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@reach/router";
 import { Box, Image, IconButton } from "@chakra-ui/core";
 
 import Logo from "../assets/website-logo.svg";
@@ -23,9 +24,9 @@ const TopHeader = ({ hideOnPC, hamburgerMenuWithHandler }) => {
           onClick={hamburgerMenuWithHandler}
         />
       ) : (
-        ""
-      )}
-      <Image src={Logo} display="block" margin="auto" />
+          ""
+        )}
+      <Link to="/"><Image src={Logo} display="inline-block" margin="auto" /></Link>
     </Box>
   );
 };
